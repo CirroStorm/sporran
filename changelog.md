@@ -1,3 +1,6 @@
+## 4.0.3
+Pub analysis fixes for Dart 2.4.1
+
 ## 4.0.2
 Formatting for pana
 

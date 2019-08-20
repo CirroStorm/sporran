@@ -17,15 +17,20 @@ part of lawndart;
 /// Wraps the IndexedDB API and exposes it as a [Store].
 /// IndexedDB is generally the preferred API if it is available.
 class IndexedDbStore extends Store {
-  static Map<String, idb.Database> _databases = new Map<String, idb.Database>();
-
-  final String dbName;
-  final String storeName;
-
+  /// Construction
   IndexedDbStore._(this.dbName, this.storeName) : super._();
 
+  static Map<String, idb.Database> _databases = Map<String, idb.Database>();
+
+  /// Database name
+  final String dbName;
+
+  /// Store name
+  final String storeName;
+
+  /// Open
   static Future<IndexedDbStore> open(String dbName, String storeName) async {
-    final store = new IndexedDbStore._(dbName, storeName);
+    final IndexedDbStore store = IndexedDbStore._(dbName, storeName);
     await store._open();
     return store;
   }
@@ -33,23 +38,24 @@ class IndexedDbStore extends Store {
   /// Returns true if IndexedDB is supported on this platform.
   static bool get supported => idb.IdbFactory.supported;
 
-  Future _open() async {
+  @override
+  Future<void> _open() async {
     if (!supported) {
-      throw new UnsupportedError('IndexedDB is not supported on this platform');
+      throw UnsupportedError('IndexedDB is not supported on this platform');
     }
 
     if (_db != null) {
       _db.close();
     }
 
-    var db = await window.indexedDB.open(dbName);
+    idb.Database db = await window.indexedDB.open(dbName);
 
     //print("Newly opened db $dbName has version ${db.version} and stores ${db.objectStoreNames}");
     if (!db.objectStoreNames.contains(storeName)) {
       db.close();
       //print('Attempting upgrading $storeName from ${db.version}');
       db = await window.indexedDB.open(dbName, version: db.version + 1,
-          onUpgradeNeeded: (e) {
+          onUpgradeNeeded: (dynamic e) {
         //print('Upgrading db $dbName to ${db.version + 1}');
             final idb.Database d = e.target.result;
         d.createObjectStore(storeName);
@@ -63,15 +69,12 @@ class IndexedDbStore extends Store {
   idb.Database get _db => _databases[dbName];
 
   @override
-  Future removeByKey(String key) {
-    return _runInTxn((store) => store.delete(key));
-  }
+  Future<void> removeByKey(String key) =>
+      _runInTxn((dynamic store) => store.delete(key));
 
   @override
-  Future<String> save(String obj, String key) {
-    return _runInTxn<String>(
-        (store) async => (await store.put(obj, key)) as String);
-  }
+  Future<String> save(String obj, String key) =>
+      _runInTxn<String>((dynamic store) async => await store.put(obj, key));
 
   @override
   Future<String> getByKey(String key) {

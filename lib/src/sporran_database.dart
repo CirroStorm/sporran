@@ -160,7 +160,7 @@ class _SporranDatabase {
           * are not present in the document itself so remove them.
           */
         attachmentsToDelete.forEach((key) {
-          _lawndart.removeByKey(key)..then((key) => removePendingDelete(key));
+          _lawndart.removeByKey(key).then(removePendingDelete);
         });
       });
 

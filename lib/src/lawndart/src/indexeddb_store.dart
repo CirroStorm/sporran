@@ -77,42 +77,40 @@ class IndexedDbStore extends Store {
       _runInTxn<String>((dynamic store) async => await store.put(obj, key));
 
   @override
-  Future<String> getByKey(String key) {
-    return _runInTxn<String>(
-        (store) async => (await store.getObject(key) as String), 'readonly');
-  }
+  Future<String> getByKey(String key) =>
+      _runInTxn<String>(
+              (dynamic store) async => await store.getObject(key), 'readonly');
 
   @override
-  Future nuke() {
-    return _runInTxn((store) => store.clear());
-  }
+  Future<void> nuke() => _runInTxn((dynamic store) => store.clear());
 
   Future<T> _runInTxn<T>(Future<T> requestCommand(idb.ObjectStore store),
       [String txnMode = 'readwrite']) async {
-    final trans = _db.transaction(storeName, txnMode);
-    final store = trans.objectStore(storeName);
-    final result = await requestCommand(store);
+    final idb.Transaction trans = _db.transaction(storeName, txnMode);
+    final idb.ObjectStore store = trans.objectStore(storeName);
+    final T result = await requestCommand(store);
     await trans.completed;
     return result;
   }
 
   Stream<String> _doGetAll(String onCursor(idb.CursorWithValue cursor)) async* {
-    final trans = _db.transaction(storeName, 'readonly');
-    final store = trans.objectStore(storeName);
-    await for (var cursor in store.openCursor(autoAdvance: true)) {
+    final idb.Transaction trans = _db.transaction(storeName, 'readonly');
+    final idb.ObjectStore store = trans.objectStore(storeName);
+    await for (dynamic cursor in store.openCursor(autoAdvance: true)) {
       yield onCursor(cursor);
     }
   }
 
   @override
-  Stream<String> all() {
-    return _doGetAll((idb.CursorWithValue cursor) => cursor.value);
-  }
+  Stream<String> all() =>
+      _doGetAll((idb.CursorWithValue cursor) => cursor.value);
 
   @override
-  Future batch(Map<String, String> objs) {
-    return _runInTxn((store) {
-      objs.forEach((k, v) {
+  // ignore: prefer_expression_function_bodies
+  Future<void> batch(Map<String, String> objectsByKey) {
+    // ignore: missing_return
+    return _runInTxn((dynamic store) {
+      objectsByKey.forEach((dynamic k, dynamic v) {
         store.put(v, k);
       });
     });
@@ -120,29 +118,30 @@ class IndexedDbStore extends Store {
 
   @override
   Stream<String> getByKeys(Iterable<String> keys) async* {
-    for (var key in keys) {
-      final v = await getByKey(key);
-      if (v != null) yield v;
+    for (String key in keys) {
+      final dynamic v = await getByKey(key);
+      if (v != null) {
+        yield v;
+      }
     }
   }
 
   @override
+  // ignore: prefer_expression_function_bodies
   Future<bool> removeByKeys(Iterable<String> keys) {
-    return _runInTxn((store) {
-      for (var key in keys) {
-        store.delete(key);
-      }
+    // ignore: missing_return
+    return _runInTxn((dynamic store) {
+      keys.forEach(store.delete);
     });
   }
 
   @override
   Future<bool> exists(String key) async {
-    final value = await getByKey(key);
+    final dynamic value = await getByKey(key);
     return value != null;
   }
 
   @override
-  Stream<String> keys() {
-    return _doGetAll((idb.CursorWithValue cursor) => cursor.key);
-  }
+  Stream<String> keys() =>
+      _doGetAll((idb.CursorWithValue cursor) => cursor.key);
 }

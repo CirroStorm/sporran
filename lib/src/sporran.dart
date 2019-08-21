@@ -15,31 +15,18 @@
 
 part of sporran;
 
+/// Sporran client class
 class Sporran {
-  /// Method constants
-  static final String putc = "put";
-  static final String getc = "get";
-  static final String deletec = "delete";
-  static final String putAttachmentc = "put_attachment";
-  static final String getAttachmentc = "get_attachment";
-  static final String deleteAttachmentc = "delete_attachment";
-  static final String bulkCreatec = "bulk_create";
-  static final String getAllDocsc = "get_all_docs";
-  static final String dbInfoc = "db_info";
-
   /// Construction.
-  ///
   Sporran(SporranInitialiser initialiser) {
     if (initialiser == null) {
-      throw new SporranException(SporranException.noInitialiserEx);
+      throw SporranException(SporranException.noInitialiserEx);
     }
 
-    this._dbName = initialiser.dbName;
+    _dbName = initialiser.dbName;
 
-    /**
-     * Construct our database.
-     */
-    _database = new _SporranDatabase(
+    // Construct our database.
+    _database = _SporranDatabase(
         _dbName,
         initialiser.hostname,
         initialiser.manualNotificationControl,
@@ -49,12 +36,21 @@ class Sporran {
         initialiser.password,
         initialiser.preserveLocal);
 
-    /**
-     * Online/offline listeners
-     */
+    // Online/offline listeners
     window.onOnline.listen((_) => _transitionToOnline());
     window.onOffline.listen((_) => _online = false);
   }
+
+  /// Method constants
+  static const String putc = 'put';
+  static const String getc = 'get';
+  static const String deletec = 'delete';
+  static const String putAttachmentc = 'put_attachment';
+  static const String getAttachmentc = 'get_attachment';
+  static const String deleteAttachmentc = 'delete_attachment';
+  static const String bulkCreatec = 'bulk_create';
+  static const String getAllDocsc = 'get_all_docs';
+  static const String dbInfoc = 'db_info';
 
   /// Database
   _SporranDatabase _database;
@@ -72,25 +68,30 @@ class Sporran {
   /// Wilt database
   Wilt get wilt => _database.wilt;
 
-  /// On/Offline indicator
   bool _online = true;
+
+  /// On/Offline indicator
   bool get online {
     /* If we are not online or we are and the CouchDb database is not
      * available we are offline
      */
-    if ((!_online) || (_database.noCouchDb)) return false;
+    if ((!_online) || (_database.noCouchDb)) {
+      return false;
+    }
     return true;
   }
 
   set online(bool state) {
     _online = state;
-    if (state) _transitionToOnline();
+    if (state) {
+      _transitionToOnline();
+    }
   }
 
+  dynamic _clientCompleter;
   /// Completion function
-  var _clientCompleter;
-
-  set clientCompleter(JsonObjectLite completer) => _clientCompleter = completer;
+  set clientCompleter(JsonObjectLite<dynamic> completer) =>
+      _clientCompleter = completer;
 
   /// Response getter for completion callbacks
   JsonObjectLite _completionResponse;

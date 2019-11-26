@@ -95,8 +95,7 @@ void main() {
       docs['8docid2'] = document2;
       docs['8docid3'] = document3;
 
-      sporran8.bulkCreate(docs)
-          .then(wrapper);
+      sporran8.bulkCreate(docs).then(wrapper);
     });
 
     test('3. Create Attachment Offline docid1 Attachment 1', () {
@@ -118,8 +117,7 @@ void main() {
       attachment.rev = docid1rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran8.putAttachment('8docid1', attachment)
-          .then(wrapper);
+      sporran8.putAttachment('8docid1', attachment).then(wrapper);
     });
 
     test('4. Create Attachment Offline docid1 Attachment 2', () {
@@ -141,8 +139,7 @@ void main() {
       attachment.rev = docid1rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran8.putAttachment('8docid1', attachment)
-          .then(wrapper);
+      sporran8.putAttachment('8docid1', attachment).then(wrapper);
     });
 
     test('5. Create Attachment Offline docid2 Attachment 1', () {
@@ -164,8 +161,7 @@ void main() {
       attachment.rev = docid2rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran8.putAttachment('8docid2', attachment)
-          .then(wrapper);
+      sporran8.putAttachment('8docid2', attachment).then(wrapper);
     });
 
     test('6. Delete Document Offline docid3', () {
@@ -180,8 +176,7 @@ void main() {
         expect(sporran8.pendingDeleteSize, 1);
       });
 
-      sporran8.delete('8docid3', docid3rev)
-          .then(wrapper);
+      sporran8.delete('8docid3', docid3rev).then(wrapper);
     });
 
     test('7. Transition to online', () {
@@ -225,8 +220,7 @@ void main() {
         expect(doc2Attachments.length, 1);
       });
 
-      sporran8.getAllDocs(includeDocs: true)
-          .then(wrapper);
+      sporran8.getAllDocs(includeDocs: true).then(wrapper);
     });
   });
 }

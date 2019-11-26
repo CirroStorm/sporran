@@ -91,8 +91,7 @@ void main() {
       docs['8docid2'] = document2;
       docs['8docid3'] = document3;
 
-      sporran9.bulkCreate(docs)
-          .then(wrapper);
+      sporran9.bulkCreate(docs).then(wrapper);
     });
 
     test('3. Create Attachment Offline docid1 Attachment 1', () {
@@ -114,8 +113,7 @@ void main() {
       attachment.rev = docid1rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran9.putAttachment('8docid1', attachment)
-          .then(wrapper);
+      sporran9.putAttachment('8docid1', attachment).then(wrapper);
     });
 
     test('4. Create Attachment Offline docid1 Attachment 2', () {
@@ -137,8 +135,7 @@ void main() {
       attachment.rev = docid1rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran9.putAttachment('8docid1', attachment)
-          .then(wrapper);
+      sporran9.putAttachment('8docid1', attachment).then(wrapper);
     });
 
     test('5. Create Attachment Offline docid2 Attachment 1', () {
@@ -160,8 +157,7 @@ void main() {
       attachment.rev = docid2rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran9.putAttachment('8docid2', attachment)
-          .then(wrapper);
+      sporran9.putAttachment('8docid2', attachment).then(wrapper);
     });
 
     test('6. Delete Document Offline docid3', () {
@@ -176,8 +172,7 @@ void main() {
         expect(sporran9.pendingDeleteSize, 1);
       });
 
-      sporran9.delete('8docid3', docid3rev)
-          .then(wrapper);
+      sporran9.delete('8docid3', docid3rev).then(wrapper);
     });
 
     test('7. Check - Get All Docs Offline - Existing Sporran', () {
@@ -205,8 +200,7 @@ void main() {
         sporran9 = null;
       });
       const List<String> keys = null;
-      sporran9.getAllDocs(includeDocs: true, keys: keys)
-          .then(wrapper);
+      sporran9.getAllDocs(includeDocs: true, keys: keys).then(wrapper);
     });
 
     test('8. Check - Get All Docs Offline -  Sporran', () {
@@ -238,8 +232,7 @@ void main() {
         sporran10.online = false;
 
         const List<String> keys = null;
-        sporran10.getAllDocs(includeDocs: true, keys: keys)
-            .then(wrapper1);
+        sporran10.getAllDocs(includeDocs: true, keys: keys).then(wrapper1);
       });
 
       initialiser.preserveLocal = true;

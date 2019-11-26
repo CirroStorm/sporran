@@ -109,8 +109,7 @@ void main() {
       docs['9docid2'] = document2;
       docs['9docid3'] = document3;
 
-      sporran9.bulkCreate(docs)
-          .then(wrapper);
+      sporran9.bulkCreate(docs).then(wrapper);
     });
 
     test('3. Create Attachment Online docid1 Attachment 1', () {
@@ -132,8 +131,7 @@ void main() {
       attachment.rev = docid1rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran9.putAttachment('9docid1', attachment)
-          .then(wrapper);
+      sporran9.putAttachment('9docid1', attachment).then(wrapper);
     });
 
     test('4. Create Attachment Online docid1 Attachment 2', () {
@@ -155,8 +153,7 @@ void main() {
       attachment.rev = docid1rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran9.putAttachment('9docid1', attachment)
-          .then(wrapper);
+      sporran9.putAttachment('9docid1', attachment).then(wrapper);
     });
 
     test('5. Create Attachment Online docid2 Attachment 1', () {
@@ -178,8 +175,7 @@ void main() {
       attachment.rev = docid2rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran9.putAttachment('9docid2', attachment)
-          .then(wrapper);
+      sporran9.putAttachment('9docid2', attachment).then(wrapper);
     });
 
     test('6. Sync Pause', () {
@@ -202,8 +198,7 @@ void main() {
       });
 
       sporran9.online = false;
-      sporran9.delete('9docid3', docid3rev)
-          .then(wrapper);
+      sporran9.delete('9docid3', docid3rev).then(wrapper);
     });
 
     test('8. Delete Attachment Offline docid1 Attachment1', () {
@@ -216,7 +211,8 @@ void main() {
         expect(res.rev, isNull);
       });
 
-      sporran9.deleteAttachment('9docid1', 'AttachmentName1', docid1rev)
+      sporran9
+          .deleteAttachment('9docid1', 'AttachmentName1', docid1rev)
           .then(wrapper);
     });
 
@@ -240,12 +236,10 @@ void main() {
         document2.title = 'Document 2 Updated';
         document2.version = 2;
         document2.attribute = 'Doc 2 attribute Updated';
-        sporran9.put('9docid2', document2, docid2rev)
-            .then(wrapper2);
+        sporran9.put('9docid2', document2, docid2rev).then(wrapper2);
       });
 
-      sporran9.get('9docid2', docid2rev)
-          .then(wrapper1);
+      sporran9.get('9docid2', docid2rev).then(wrapper1);
     });
 
     test('10. Put Document Offline docid4', () {
@@ -263,8 +257,7 @@ void main() {
       document4.title = 'Document 4';
       document4.version = 4;
       document4.attribute = 'Doc 4 attribute';
-      sporran9.put('9docid4', document4, null)
-          .then(wrapper);
+      sporran9.put('9docid4', document4, null).then(wrapper);
     });
 
     test('11. Sync Pause', () {
@@ -324,8 +317,7 @@ void main() {
         expect(doc4Attachments, isEmpty);
       });
 
-      sporran9.getAllDocs(includeDocs: true)
-          .then(wrapper);
+      sporran9.getAllDocs(includeDocs: true).then(wrapper);
     });
   });
 }

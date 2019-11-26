@@ -145,8 +145,7 @@ void main() {
             SporranException.headerEx + SporranException.putNoDocIdEx);
       });
 
-      sporran.put(null, null)
-          .then((_) {}, onError: completer);
+      sporran.put(null, null).then((_) {}, onError: completer);
     });
 
     test('5. Get No Doc Id ', () {
@@ -158,8 +157,7 @@ void main() {
             SporranException.headerEx + SporranException.getNoDocIdEx);
       });
 
-      sporran.get(null, null)
-          .then((_) {}, onError: completer);
+      sporran.get(null, null).then((_) {}, onError: completer);
     });
 
     test('6. Delete No Doc Id ', () {
@@ -171,8 +169,7 @@ void main() {
             SporranException.headerEx + SporranException.deleteNoDocIdEx);
       });
 
-      sporran.delete(null, null)
-          .then((_) {}, onError: completer);
+      sporran.delete(null, null).then((_) {}, onError: completer);
     });
 
     test('7. Put Attachment No Doc Id ', () {
@@ -184,8 +181,7 @@ void main() {
             SporranException.headerEx + SporranException.putAttNoDocIdEx);
       });
 
-      sporran.putAttachment(null, null)
-          .then((_) {}, onError: completer);
+      sporran.putAttachment(null, null).then((_) {}, onError: completer);
     });
 
     test('8. Put Attachment No Attachment ', () {
@@ -197,8 +193,7 @@ void main() {
             SporranException.headerEx + SporranException.putAttNoAttEx);
       });
 
-      sporran.putAttachment('billy', null)
-          .then((_) {}, onError: completer);
+      sporran.putAttachment('billy', null).then((_) {}, onError: completer);
     });
 
     test('9. Delete Attachment No Doc Id ', () {
@@ -210,7 +205,8 @@ void main() {
             SporranException.headerEx + SporranException.deleteAttNoDocIdEx);
       });
 
-      sporran.deleteAttachment(null, null, null)
+      sporran
+          .deleteAttachment(null, null, null)
           .then((_) {}, onError: completer);
     });
 
@@ -223,7 +219,8 @@ void main() {
             SporranException.headerEx + SporranException.deleteAttNoAttNameEx);
       });
 
-      sporran.deleteAttachment('billy', null, null)
+      sporran
+          .deleteAttachment('billy', null, null)
           .then((_) {}, onError: completer);
     });
 
@@ -236,7 +233,8 @@ void main() {
             SporranException.headerEx + SporranException.deleteAttNoRevEx);
       });
       //sporran.online = false;
-      sporran.deleteAttachment('billy', 'fred', null)
+      sporran
+          .deleteAttachment('billy', 'fred', null)
           .then((_) {}, onError: completer);
     });
 
@@ -249,8 +247,7 @@ void main() {
             SporranException.headerEx + SporranException.getAttNoDocIdEx);
       });
 
-      sporran.getAttachment(null, null)
-          .then((_) {}, onError: completer);
+      sporran.getAttachment(null, null).then((_) {}, onError: completer);
     });
 
     test('13. Get Attachment No Attachment Name ', () {
@@ -262,8 +259,7 @@ void main() {
             SporranException.headerEx + SporranException.getAttNoAttNameEx);
       });
 
-      sporran.getAttachment('billy', null)
-          .then((_) {}, onError: completer);
+      sporran.getAttachment('billy', null).then((_) {}, onError: completer);
     });
 
     test('14. Bulk Create No Document List ', () {
@@ -275,8 +271,7 @@ void main() {
             SporranException.headerEx + SporranException.bulkCreateNoDocListEx);
       });
 
-      sporran.bulkCreate(null)
-          .then((_) {}, onError: completer);
+      sporran.bulkCreate(null).then((_) {}, onError: completer);
     });
 
     test('15. Login invalid user ', () {
@@ -358,8 +353,7 @@ void main() {
       });
 
       onlineDoc.name = 'Online';
-      sporran3.put(docIdPutOnline, onlineDoc)
-          .then(wrapper);
+      sporran3.put(docIdPutOnline, onlineDoc).then(wrapper);
     });
 
     test('3. Put Document Offline docIdPutOffline', () {
@@ -374,8 +368,7 @@ void main() {
 
       sporran3.online = false;
       offlineDoc.name = 'Offline';
-      sporran3.put(docIdPutOffline, offlineDoc)
-          .then(wrapper);
+      sporran3.put(docIdPutOffline, offlineDoc).then(wrapper);
     });
 
     test('4. Put Document Online Conflict', () {
@@ -389,8 +382,7 @@ void main() {
 
       sporran3.online = true;
       onlineDoc.name = 'Online';
-      sporran3.put(docIdPutOnline, onlineDoc)
-          .then(wrapper);
+      sporran3.put(docIdPutOnline, onlineDoc).then(wrapper);
     });
 
     test('5. Put Document Online Updated docIdPutOnline', () {
@@ -406,8 +398,7 @@ void main() {
       });
 
       onlineDoc.name = 'Online - Updated';
-      sporran3.put(docIdPutOnline, onlineDoc, onlineDocRev)
-          .then(wrapper);
+      sporran3.put(docIdPutOnline, onlineDoc, onlineDocRev).then(wrapper);
     });
 
     test('6. Get Document Offline docIdPutOnline', () {
@@ -423,8 +414,7 @@ void main() {
       });
 
       sporran3.online = false;
-      sporran3.get(docIdPutOnline)
-          .then(wrapper);
+      sporran3.get(docIdPutOnline).then(wrapper);
     });
 
     test('7. Get Document Offline docIdPutOffline', () {
@@ -441,8 +431,7 @@ void main() {
       });
 
       sporran3.online = false;
-      sporran3.get(docIdPutOffline)
-          .then(wrapper);
+      sporran3.get(docIdPutOffline).then(wrapper);
     });
 
     test('8. Get Document Offline Not Exist', () {
@@ -458,8 +447,7 @@ void main() {
 
       sporran3.online = false;
       offlineDoc.name = 'Offline';
-      sporran3.get('Billy')
-          .then(wrapper);
+      sporran3.get('Billy').then(wrapper);
     });
 
     test('9. Get Document Online docIdPutOnline', () {
@@ -474,8 +462,7 @@ void main() {
       });
 
       sporran3.online = true;
-      sporran3.get(docIdPutOnline)
-          .then(wrapper);
+      sporran3.get(docIdPutOnline).then(wrapper);
     });
 
     test('10. Delete Document Offline', () {
@@ -491,8 +478,7 @@ void main() {
       });
 
       sporran3.online = false;
-      sporran3.delete(docIdPutOffline)
-          .then(wrapper);
+      sporran3.delete(docIdPutOffline).then(wrapper);
     });
 
     test('11. Delete Document Online', () {
@@ -507,8 +493,7 @@ void main() {
       });
 
       sporran3.online = true;
-      sporran3.delete(docIdPutOnline, onlineDocRev)
-          .then(wrapper);
+      sporran3.delete(docIdPutOnline, onlineDocRev).then(wrapper);
     });
 
     test('12. Get Document Online Not Exist', () {
@@ -520,8 +505,7 @@ void main() {
         expect(res.id, 'Billy');
       });
 
-      sporran3.get('Billy')
-          .then(wrapper);
+      sporran3.get('Billy').then(wrapper);
     });
 
     test('13. Delete Document Not Exist', () {
@@ -535,8 +519,7 @@ void main() {
       });
 
       sporran3.online = false;
-      sporran3.delete('Billy')
-          .then(wrapper);
+      sporran3.delete('Billy').then(wrapper);
     });
 
     test('14. Group Pause', () {
@@ -586,8 +569,7 @@ void main() {
 
       sporran4.online = true;
       onlineDoc.name = 'Online';
-      sporran4.put(docIdPutOnline, onlineDoc)
-          .then(wrapper);
+      sporran4.put(docIdPutOnline, onlineDoc).then(wrapper);
     });
 
     test('3. Put Document Offline docIdPutOffline', () {
@@ -602,8 +584,7 @@ void main() {
 
       sporran4.online = false;
       offlineDoc.name = 'Offline';
-      sporran4.put(docIdPutOffline, offlineDoc)
-          .then(wrapper);
+      sporran4.put(docIdPutOffline, offlineDoc).then(wrapper);
     });
 
     test('4. Create Attachment Online docIdPutOnline', () {
@@ -626,8 +607,7 @@ void main() {
       attachment.rev = onlineDocRev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran4.putAttachment(docIdPutOnline, attachment)
-          .then(wrapper);
+      sporran4.putAttachment(docIdPutOnline, attachment).then(wrapper);
     });
 
     test('5. Create Attachment Offline docIdPutOffline', () {
@@ -649,8 +629,7 @@ void main() {
       attachment.rev = onlineDocRev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran4.putAttachment(docIdPutOffline, attachment)
-          .then(wrapper);
+      sporran4.putAttachment(docIdPutOffline, attachment).then(wrapper);
     });
 
     test('6. Get Attachment Online docIdPutOnline', () {
@@ -667,8 +646,7 @@ void main() {
       });
 
       sporran4.online = true;
-      sporran4.getAttachment(docIdPutOnline, 'onlineAttachment')
-          .then(wrapper);
+      sporran4.getAttachment(docIdPutOnline, 'onlineAttachment').then(wrapper);
     });
 
     test('7. Get Attachment Offline docIdPutOffline', () {
@@ -687,7 +665,8 @@ void main() {
       });
 
       sporran4.online = false;
-      sporran4.getAttachment(docIdPutOffline, 'offlineAttachment')
+      sporran4
+          .getAttachment(docIdPutOffline, 'offlineAttachment')
           .then(wrapper);
     });
 
@@ -699,13 +678,13 @@ void main() {
         expect(res.id, docIdPutOnline);
         expect(res.localResponse, isFalse);
         expect(res.rev, onlineDocRev);
-        final List attachments = WiltUserUtils.getAttachments(res.payload);
+        final List<JsonObjectLite<dynamic>> attachments =
+        WiltUserUtils.getAttachments(res.payload);
         expect(attachments.length, 1);
       });
 
       sporran4.online = true;
-      sporran4.get(docIdPutOnline, onlineDocRev)
-          .then(wrapper);
+      sporran4.get(docIdPutOnline, onlineDocRev).then(wrapper);
     });
 
     test('9. Delete Attachment Online docIdPutOnline', () {
@@ -720,8 +699,8 @@ void main() {
       });
 
       sporran4.online = true;
-      sporran4.deleteAttachment(
-          docIdPutOnline, 'onlineAttachment', onlineDocRev)
+      sporran4
+          .deleteAttachment(docIdPutOnline, 'onlineAttachment', onlineDocRev)
           .then(wrapper);
     });
 
@@ -730,8 +709,7 @@ void main() {
       final dynamic wrapper = expectAsync1((dynamic res) {});
 
       /* Tidy up only, tested in group 3 */
-      sporran4.delete(docIdPutOnline, onlineDocRev)
-          .then(wrapper);
+      sporran4.delete(docIdPutOnline, onlineDocRev).then(wrapper);
     });
 
     test('11. Delete Attachment Offline docIdPutOffline', () {
@@ -746,7 +724,8 @@ void main() {
       });
 
       sporran4.online = false;
-      sporran4.deleteAttachment(docIdPutOffline, 'offlineAttachment', null)
+      sporran4
+          .deleteAttachment(docIdPutOffline, 'offlineAttachment', null)
           .then(wrapper);
     });
 
@@ -762,8 +741,7 @@ void main() {
       });
 
       sporran4.online = false;
-      sporran4.deleteAttachment(docIdPutOffline, 'Billy', null)
-          .then(wrapper);
+      sporran4.deleteAttachment(docIdPutOffline, 'Billy', null).then(wrapper);
     }, skip: false);
 
     /*test('13. Group Pause', () {
@@ -838,8 +816,7 @@ void main() {
       docs['docid2'] = document2;
       docs['docid3'] = document3;
 
-      sporran5.bulkCreate(docs)
-          .then(wrapper);
+      sporran5.bulkCreate(docs).then(wrapper);
     });
 
     test('3. Bulk Insert Documents Offline', () {
@@ -879,8 +856,7 @@ void main() {
       docs['docid3offline'] = document3;
 
       sporran5.online = false;
-      sporran5.bulkCreate(docs)
-          .then(wrapper);
+      sporran5.bulkCreate(docs).then(wrapper);
     });
 
     test('4. Get All Docs Online', () {
@@ -900,8 +876,7 @@ void main() {
       });
 
       sporran5.online = true;
-      sporran5.getAllDocs(includeDocs: true)
-          .then(wrapper);
+      sporran5.getAllDocs(includeDocs: true).then(wrapper);
     });
 
     test('5. Get All Docs Offline', () {
@@ -923,7 +898,7 @@ void main() {
       });
 
       sporran5.online = false;
-      final List<String> keys = [
+      final List<String> keys = <String>[
         'docid1offline',
         'docid2offline',
         'docid3offline',
@@ -932,8 +907,7 @@ void main() {
         'docid3'
       ];
 
-      sporran5.getAllDocs(keys: keys)
-          .then(wrapper);
+      sporran5.getAllDocs(keys: keys).then(wrapper);
     });
 
     test('6. Get Database Info Offline', () {
@@ -954,8 +928,7 @@ void main() {
         expect(res.payload.contains('docid3offline'), isTrue);
       });
 
-      sporran5.getDatabaseInfo()
-          .then(wrapper);
+      sporran5.getDatabaseInfo().then(wrapper);
     });
 
     test('7. Get Database Info Online', () {
@@ -972,20 +945,16 @@ void main() {
       });
 
       sporran5.online = true;
-      sporran5.getDatabaseInfo()
-          .then(wrapper);
+      sporran5.getDatabaseInfo().then(wrapper);
     });
 
     test('8. Tidy Up All Docs Online', () {
       print('5.8');
       final dynamic wrapper = expectAsync1((dynamic res) {}, count: 3);
 
-      sporran5.delete('docid1', docid1rev)
-          .then(wrapper);
-      sporran5.delete('docid2', docid2rev)
-          .then(wrapper);
-      sporran5.delete('docid3', docid3rev)
-          .then(wrapper);
+      sporran5.delete('docid1', docid1rev).then(wrapper);
+      sporran5.delete('docid2', docid2rev).then(wrapper);
+      sporran5.delete('docid3', docid3rev).then(wrapper);
     });
 
     /*test('9. Group Pause', () {
@@ -1079,10 +1048,7 @@ void main() {
       docList.add(doc2);
       docList.add(doc3);
       final String docs = WiltUserUtils.createBulkInsertString(docList);
-      wilting.bulkString(docs)
-          .then((dynamic res) {
-          completer(res);
-        });
+      wilting.bulkString(docs).then(completer);
     });
 
     /* Pause a little for the notifications to come through */
@@ -1090,7 +1056,7 @@ void main() {
       print('6.4');
       final dynamic wrapper = expectAsync0(() {});
 
-      pause = Timer(Duration(seconds: 3), wrapper);
+      pause = Timer(const Duration(seconds: 3), wrapper);
     });
 
     /* Go offline and get our created documents, from local storage */
@@ -1107,10 +1073,7 @@ void main() {
       });
 
       sporran6.online = false;
-      sporran6.get('MyBulkId1')
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran6.get('MyBulkId1').then(wrapper);
     });
 
     test('5. Get Document Offline MyBulkId2', () {
@@ -1125,10 +1088,7 @@ void main() {
         expect(res.payload.attribute, 'Doc 2 attribute');
       });
 
-      sporran6.get('MyBulkId2')
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran6.get('MyBulkId2').then(wrapper);
     });
 
     test('6. Get Document Offline MyBulkId3', () {
@@ -1143,10 +1103,7 @@ void main() {
         expect(res.payload.attribute, 'Doc 3 attribute');
       });
 
-      sporran6.get('MyBulkId3')
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran6.get('MyBulkId3').then(wrapper);
     });
 
     test('7. Wilt - Delete Document MyBulkId1', () {
@@ -1154,7 +1111,7 @@ void main() {
       final dynamic wrapper = expectAsync1((dynamic res) {
         try {
           expect(res.error, isFalse);
-        } catch (e) {
+        } on Exception {
           logMessage('WILT::Delete Document MyBulkId1');
           final dynamic errorResponse = res.jsonCouchResponse;
           final String errorText = errorResponse.error;
@@ -1170,10 +1127,7 @@ void main() {
         expect(successResponse.id, 'MyBulkId1');
       });
 
-      wilting.deleteDocument('MyBulkId1', docId1Rev)
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      wilting.deleteDocument('MyBulkId1', docId1Rev).then(wrapper);
     });
 
     test('8. Wilt - Delete Document MyBulkId2', () {
@@ -1181,7 +1135,7 @@ void main() {
       final dynamic wrapper = expectAsync1((dynamic res) {
         try {
           expect(res.error, isFalse);
-        } catch (e) {
+        } on Exception {
           logMessage('WILT::Delete Document MyBulkId2');
           final dynamic errorResponse = res.jsonCouchResponse;
           final String errorText = errorResponse.error;
@@ -1197,10 +1151,7 @@ void main() {
         expect(successResponse.id, 'MyBulkId2');
       });
 
-      wilting.deleteDocument('MyBulkId2', docId2Rev)
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      wilting.deleteDocument('MyBulkId2', docId2Rev).then(wrapper);
     });
 
     test('9. Wilt - Delete Document MyBulkId3', () {
@@ -1208,7 +1159,7 @@ void main() {
       final dynamic wrapper = expectAsync1((dynamic res) {
         try {
           expect(res.error, isFalse);
-        } catch (e) {
+        } on Exception {
           logMessage('WILT::Delete Document MyBulkId3');
           final dynamic errorResponse = res.jsonCouchResponse;
           final String errorText = errorResponse.error;
@@ -1224,10 +1175,7 @@ void main() {
         expect(successResponse.id, 'MyBulkId3');
       });
 
-      wilting.deleteDocument('MyBulkId3', docId3Rev)
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      wilting.deleteDocument('MyBulkId3', docId3Rev).then(wrapper);
     });
 
     /* Pause a little for the notifications to come through */
@@ -1235,7 +1183,7 @@ void main() {
       print('6.10');
       final dynamic wrapper = expectAsync0(() {});
 
-      pause = Timer(Duration(seconds: 3), wrapper);
+      pause = Timer(const Duration(seconds: 3), wrapper);
     });
 
     /* Go offline and get our created documents, from local storage */
@@ -1248,10 +1196,7 @@ void main() {
       });
 
       sporran6.online = false;
-      sporran6.get('MyBulkId1')
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran6.get('MyBulkId1').then(wrapper);
     });
 
     test('12. Get Document Offline Deleted MyBulkId2', () {
@@ -1262,10 +1207,7 @@ void main() {
         expect(res.localResponse, isTrue);
       });
 
-      sporran6.get('MyBulkId2')
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran6.get('MyBulkId2').then(wrapper);
     });
 
     test('13. Get Document Offline Deleted MyBulkId3', () {
@@ -1276,17 +1218,14 @@ void main() {
         expect(res.localResponse, isTrue);
       });
 
-      sporran6.get('MyBulkId3')
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran6.get('MyBulkId3').then(wrapper);
     });
 
     test('14. Group Pause', () {
       print('6.14');
       final dynamic wrapper = expectAsync0(() {});
 
-      pause = Timer(Duration(seconds: 3), wrapper);
+      pause = Timer(const Duration(seconds: 3), wrapper);
     });
   }, skip: true);
 
@@ -1308,11 +1247,8 @@ void main() {
 
     wilting.db = databaseName;
     String docId1Rev;
-    final String attachmentPayload =
-        'iVBORw0KGgoAAAANSUhEUgAAABwAAAASCAMAAAB/2U7WAAAABl' +
-            'BMVEUAAAD///+l2Z/dAAAASUlEQVR4XqWQUQoAIAxC2/0vXZDr' +
-            'EX4IJTRkb7lobNUStXsB0jIXIAMSsQnWlsV+wULF4Avk9fLq2r' +
-            '8a5HSE35Q3eO2XP1A1wQkZSgETvDtKdQAAAABJRU5ErkJggg==';
+    const String attachmentPayload =
+        'iVBORw0KGgoAAAANSUhEUgAAABwAAAASCAMAAAB/2U7WAAAABlBMVEUAAAD///+l2Z/dAAAASUlEQVR4XqWQUQoAIAxC2/0vXZDrEX4IJTRkb7lobNUStXsB0jIXIAMSsQnWlsV+wULF4Avk9fLq2r8a5HSE35Q3eO2XP1A1wQkZSgETvDtKdQAAAABJRU5ErkJggg==';
 
     test('1. Create and Open Sporran', () {
       print('7.1');
@@ -1333,7 +1269,7 @@ void main() {
       final dynamic completer = expectAsync1((dynamic res) {
         try {
           expect(res.error, isFalse);
-        } catch (e) {
+        } on Exception {
           logMessage('WILT::Bulk Insert Supplied Keys');
           final dynamic errorResponse = res.jsonCouchResponse;
           final String errorText = errorResponse.error;
@@ -1367,15 +1303,12 @@ void main() {
       document3.version = 3;
       document3.attribute = 'Doc 3 attribute';
       final String doc3 = WiltUserUtils.addDocumentId(document3, 'MyBulkId3');
-      final List docList = List<String>();
+      final List<String> docList = <String>[];
       docList.add(doc1);
       docList.add(doc2);
       docList.add(doc3);
       final String docs = WiltUserUtils.createBulkInsertString(docList);
-      wilting.bulkString(docs)
-          .then((dynamic res) {
-          completer(res);
-        });
+      wilting.bulkString(docs).then(completer);
     });
 
     /* Pause a little for the notifications to come through */
@@ -1383,7 +1316,7 @@ void main() {
       print('7.3');
       final dynamic wrapper = expectAsync0(() {});
 
-      pause = Timer(Duration(seconds: 3), wrapper);
+      pause = Timer(const Duration(seconds: 3), wrapper);
     });
 
     test('4. Create Attachment Online MyBulkId1 Attachment 1', () {
@@ -1406,10 +1339,7 @@ void main() {
       attachment.rev = docId1Rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran7.putAttachment('MyBulkId1', attachment)
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran7.putAttachment('MyBulkId1', attachment).then(wrapper);
     });
 
     test('5. Create Attachment Online MyBulkId1 Attachment 2', () {
@@ -1432,10 +1362,7 @@ void main() {
       attachment.rev = docId1Rev;
       attachment.contentType = 'image/png';
       attachment.payload = attachmentPayload;
-      sporran7.putAttachment('MyBulkId1', attachment)
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran7.putAttachment('MyBulkId1', attachment).then(wrapper);
     });
 
     /* Pause a little for the notifications to come through */
@@ -1443,7 +1370,7 @@ void main() {
       print('7.6');
       final dynamic wrapper = expectAsync0(() {});
 
-      pause = Timer(Duration(seconds: 3), wrapper);
+      pause = Timer(const Duration(seconds: 3), wrapper);
     });
 
     test('7. Delete Attachment Online MyBulkId1 Attachment 1', () {
@@ -1451,7 +1378,7 @@ void main() {
       final dynamic completer = expectAsync1((dynamic res) {
         try {
           expect(res.error, isFalse);
-        } catch (e) {
+        } on Exception {
           logMessage('WILT::Delete Attachment Failed');
           final dynamic errorResponse = res.jsonCouchResponse;
           final String errorText = errorResponse.error;
@@ -1469,17 +1396,16 @@ void main() {
       });
 
       wilting.db = databaseName;
-      wilting.deleteAttachment('MyBulkId1', 'AttachmentName1', docId1Rev)
-          .then((dynamic res) {
-          completer(res);
-        });
+      wilting
+          .deleteAttachment('MyBulkId1', 'AttachmentName1', docId1Rev)
+          .then(completer);
     });
 
     test('8. Notification Pause', () {
       print('7.8');
       final dynamic wrapper = expectAsync0(() {});
 
-      pause = Timer(Duration(seconds: 3), wrapper);
+      pause = Timer(const Duration(seconds: 3), wrapper);
     });
 
     test('9. Get Attachment Offline MyBulkId1 AttachmentName1', () {
@@ -1491,10 +1417,7 @@ void main() {
       });
 
       sporran7.online = false;
-      sporran7.getAttachment('MyBulkId1', 'AttachmentName1')
-          .then((dynamic res) {
-          wrapper(res);
-        });
+      sporran7.getAttachment('MyBulkId1', 'AttachmentName1').then(wrapper);
     });
   }, skip: false);
 }

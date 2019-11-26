@@ -41,5 +41,5 @@ class SporranException implements Exception {
   final String _message;
 
   @override
-  String toString() => 'headerEx$_message';
+  String toString() => '$headerEx$_message';
 }

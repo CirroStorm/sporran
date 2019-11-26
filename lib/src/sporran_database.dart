@@ -123,7 +123,7 @@ class _SporranDatabase {
   }
 
   /// Change notification processor
-  void _processChange(WiltChangeNotificationEvent e) {
+  void _processChange(WiltChangeNotificationEvent e) async {
     /* Ignore error events */
     if (!(e.type == WiltChangeNotificationEvent.updatee ||
         e.type == WiltChangeNotificationEvent.deletee)) {
@@ -132,7 +132,8 @@ class _SporranDatabase {
 
     /* Process the update or delete event */
     if (e.type == WiltChangeNotificationEvent.updatee) {
-      updateLocalStorageObject(e.docId, e.document, e.docRevision, updatedc);
+      await updateLocalStorageObject(
+          e.docId, e.document, e.docRevision, updatedc);
 
       /* Now update the attachments */
 
@@ -162,12 +163,13 @@ class _SporranDatabase {
             }
           }
         }
-      }, onDone: () {
+      }, onDone: () async {
         /* We now have a list of attachments for this document that
           * are not present in the document itself so remove them.
           */
         for (final dynamic key in attachmentsToDelete) {
-          _lawndart.removeByKey(key).then(removePendingDelete);
+          await _lawndart.removeByKey(key);
+          removePendingDelete(key);
         }
       });
 

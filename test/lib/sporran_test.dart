@@ -870,9 +870,6 @@ void main() {
         expect(res.payload, isNotNull);
         final dynamic successResponse = res.payload;
         expect(successResponse.total_rows, equals(3));
-        expect(successResponse.rows[0].id, equals('docid1'));
-        expect(successResponse.rows[1].id, equals('docid2'));
-        expect(successResponse.rows[2].id, equals('docid3'));
       });
 
       sporran5.online = true;
@@ -1285,7 +1282,7 @@ void main() {
         expect(successResponse[0].id, equals('MyBulkId1'));
         expect(successResponse[1].id, equals('MyBulkId2'));
         expect(successResponse[2].id, equals('MyBulkId3'));
-        docId1Rev = successResponse[0].rev;
+        docId1Rev = WiltUserUtils.getDocumentRev(successResponse[0]);
       });
 
       final dynamic document1 = JsonObjectLite<dynamic>();

@@ -5,19 +5,17 @@
  * Copyright :  S.Hamblett@OSCF
  * 
  * Sporran is a pouchdb alike for Dart.
- * 
- * This is the main Sporran API class.
- * 
- * Please read the usage and interface documentation supplied for
- * further details.
- * 
+ *
  */
 
 part of sporran;
 
 // ignore_for_file: public_member_api_docs
 
-/// Sporran client class
+///  This is the main Sporran API class.
+///
+///  Please read the usage and interface documentation supplied for
+/// further details.
 class Sporran {
   /// Construction.
   Sporran(SporranInitialiser initialiser) {
@@ -790,49 +788,22 @@ class Sporran {
     if (!online) {
       if (keys == null) {
         /* Get all the keys from Lawndart */
-        _database.lawndart.keys().toList()
-            .then((dynamic keyList) {
-            /* Only return documents */
+        _database.lawndart.keys().toList().then((dynamic keyList) {
+          /* Only return documents */
           final List<String> docList = <String>[];
           keyList.forEach((dynamic key) {
             final List<String> temp = key.split('-');
-              if ((temp.length == 3) &&
-                  (temp[2] == _SporranDatabase.attachmentMarkerc)) {
-                /* Attachment, discard the key */
+            if ((temp.length == 3) &&
+                (temp[2] == _SporranDatabase.attachmentMarkerc)) {
+              /* Attachment, discard the key */
 
-              } else {
-                docList.add(key);
-              }
-            });
-
-            _database.getLocalStorageObjects(docList)
-                .then((dynamic documents) {
-              final dynamic res = JsonObjectLite<dynamic>();
-                res.localResponse = true;
-                res.operation = getAllDocsc;
-                res.id = null;
-                res.rev = null;
-                if (documents == null) {
-                  res.ok = false;
-                  res.payload = null;
-                } else {
-                  res.ok = true;
-                  res.payload = documents;
-                  res.totalRows = documents.length;
-                  res.keyList = documents.keys.toList();
-                }
-
-                opCompleter.complete(res);
-                if (_clientCompleter != null) {
-                  _completionResponse = _createCompletionResponse(res);
-                  _clientCompleter();
-                }
-              });
+            } else {
+              docList.add(key);
+            }
           });
-      } else {
-        _database.getLocalStorageObjects(keys)
-          ..then((documents) {
-            final dynamic res = JsonObjectLite();
+
+          _database.getLocalStorageObjects(docList).then((dynamic documents) {
+            final dynamic res = JsonObjectLite<dynamic>();
             res.localResponse = true;
             res.operation = getAllDocsc;
             res.id = null;
@@ -853,6 +824,30 @@ class Sporran {
               _clientCompleter();
             }
           });
+        });
+      } else {
+        _database.getLocalStorageObjects(keys).then((dynamic documents) {
+          final dynamic res = JsonObjectLite<dynamic>();
+          res.localResponse = true;
+          res.operation = getAllDocsc;
+          res.id = null;
+          res.rev = null;
+          if (documents == null) {
+            res.ok = false;
+            res.payload = null;
+          } else {
+            res.ok = true;
+            res.payload = documents;
+            res.totalRows = documents.length;
+            res.keyList = documents.keys.toList();
+          }
+
+          opCompleter.complete(res);
+          if (_clientCompleter != null) {
+            _completionResponse = _createCompletionResponse(res);
+            _clientCompleter();
+          }
+        });
       }
     } else {
       void completer(dynamic res) {
@@ -878,16 +873,15 @@ class Sporran {
       }
 
       /* Get the document from CouchDb */
-      _database.wilt.getAllDocs(
+      _database.wilt
+          .getAllDocs(
           includeDocs: includeDocs,
           limit: limit,
           startKey: startKey,
           endKey: endKey,
           keys: keys,
           descending: descending)
-        ..then((res) {
-          completer(res);
-        });
+          .then(completer);
     }
 
     return opCompleter.future;
@@ -897,25 +891,25 @@ class Sporran {
   ///
   /// When offline the a list of the keys in the Lawndart database are returned,
   /// otherwise a response for CouchDb is returned.
-  Future<JsonObjectLite> getDatabaseInfo() {
-    final Completer<JsonObjectLite> opCompleter = Completer<JsonObjectLite>();
+  Future<JsonObjectLite<dynamic>> getDatabaseInfo() {
+    final Completer<JsonObjectLite<dynamic>> opCompleter =
+    Completer<JsonObjectLite<dynamic>>();
 
     if (!online) {
-      _database.lawndart.keys().toList()
-        ..then((List keys) {
-          final dynamic res = JsonObjectLite();
-          res.localResponse = true;
-          res.operation = dbInfoc;
-          res.id = null;
-          res.rev = null;
-          res.payload = keys;
-          res.ok = true;
-          opCompleter.complete(res);
-          if (_clientCompleter != null) {
-            _completionResponse = _createCompletionResponse(res);
-            _clientCompleter();
-          }
-        });
+      _database.lawndart.keys().toList().then((List<dynamic> keys) {
+        final dynamic res = JsonObjectLite<dynamic>();
+        res.localResponse = true;
+        res.operation = dbInfoc;
+        res.id = null;
+        res.rev = null;
+        res.payload = keys;
+        res.ok = true;
+        opCompleter.complete(res);
+        if (_clientCompleter != null) {
+          _completionResponse = _createCompletionResponse(res);
+          _clientCompleter();
+        }
+      });
     } else {
       void completer(dynamic res) {
         /* If Ok update local storage with the database info */
@@ -940,10 +934,7 @@ class Sporran {
       }
 
       /* Get the database information from CouchDb */
-      _database.wilt.getDatabaseInfo()
-        ..then((res) {
-          completer(res);
-        });
+      _database.wilt.getDatabaseInfo().then(completer);
     }
 
     return opCompleter.future;
@@ -951,16 +942,18 @@ class Sporran {
 
   /// Synchronise local storage and CouchDb when we come online or on demand.
   ///
-  /// Note we don't check for failures in this, there is nothing we can really do
-  /// if we say get a conflict error or a not exists error on an update or delete.
+  /// Note we don't check for failures in this, there is nothing we
+  /// can really do if we say get a conflict error or a not exists error
+  /// on an update or delete.
   ///
-  /// For updates, if applied successfully we wait for the change notification to
-  /// arrive to mark the update as UPDATED. Note if these are switched off sync may be
-  /// lost with Couch.
+  /// For updates, if applied successfully we wait for the change
+  /// notification to arrive to mark the update as UPDATED. Note if these
+  /// are switched off sync may be lost with Couch.
   void sync() {
     /* Only if we are online */
-    if (!online) return;
-
+    if (!online) {
+      return;
+    }
     _database.sync();
   }
 
@@ -979,13 +972,13 @@ class Sporran {
   static String _mapToJson(dynamic map) {
     if (map is String) {
       try {
-        final res = json.decode(map);
+        final dynamic res = json.decode(map);
         if (res != null) {
           return map;
         } else {
           return null;
         }
-      } catch (e) {
+      } on Exception {
         return null;
       }
     }

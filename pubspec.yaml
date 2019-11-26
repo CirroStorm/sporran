@@ -9,12 +9,10 @@ environment:
 
 dependencies:
   wilt: '>=4.0.0 <=5.0.0'
-  json_object_lite: '^2.0.0'
+  json_object_lite: '^2.1.0'
 
 dev_dependencies:
-  test: '^1.6.5'
-  dart_style: '^1.2.9'
-  dartdoc: '^0.28.4'
-  build_runner: '^1.6.2'
-  build_test: '^0.10.8'
-  build_web_compilers: '^2.1.4'
+  test: '^1.9.4'
+  build_runner: '^1.7.2'
+  build_test: '^0.10.10'
+  build_web_compilers: '^2.7.1'

@@ -20,7 +20,7 @@ class IndexedDbStore extends Store {
   /// Construction
   IndexedDbStore._(this.dbName, this.storeName) : super._();
 
-  static Map<String, idb.Database> _databases = Map<String, idb.Database>();
+  static final Map<String, idb.Database> _databases = <String, idb.Database>{};
 
   /// Database name
   final String dbName;
@@ -50,7 +50,6 @@ class IndexedDbStore extends Store {
 
     idb.Database db = await window.indexedDB.open(dbName);
 
-    //print("Newly opened db $dbName has version ${db.version} and stores ${db.objectStoreNames}");
     if (!db.objectStoreNames.contains(storeName)) {
       db.close();
       //print('Attempting upgrading $storeName from ${db.version}');
@@ -84,7 +83,7 @@ class IndexedDbStore extends Store {
   @override
   Future<void> nuke() => _runInTxn((dynamic store) => store.clear());
 
-  Future<T> _runInTxn<T>(Future<T> requestCommand(idb.ObjectStore store),
+  Future<T> _runInTxn<T>(Future<T> Function(idb.ObjectStore) requestCommand,
       [String txnMode = 'readwrite']) async {
     final idb.Transaction trans = _db.transaction(storeName, txnMode);
     final idb.ObjectStore store = trans.objectStore(storeName);
@@ -93,10 +92,11 @@ class IndexedDbStore extends Store {
     return result;
   }
 
-  Stream<String> _doGetAll(String onCursor(idb.CursorWithValue cursor)) async* {
+  Stream<String> _doGetAll(
+      String Function(idb.CursorWithValue) onCursor) async* {
     final idb.Transaction trans = _db.transaction(storeName, 'readonly');
     final idb.ObjectStore store = trans.objectStore(storeName);
-    await for (dynamic cursor in store.openCursor(autoAdvance: true)) {
+    await for (final dynamic cursor in store.openCursor(autoAdvance: true)) {
       yield onCursor(cursor);
     }
   }
@@ -118,7 +118,7 @@ class IndexedDbStore extends Store {
 
   @override
   Stream<String> getByKeys(Iterable<String> keys) async* {
-    for (String key in keys) {
+    for (final String key in keys) {
       final dynamic v = await getByKey(key);
       if (v != null) {
         yield v;

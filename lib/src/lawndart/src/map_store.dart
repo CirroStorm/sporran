@@ -28,7 +28,7 @@ abstract class _MapStore extends Store {
 
   @override
   Stream<String> keys() async* {
-    for (String k in storage.keys) {
+    for (final String k in storage.keys) {
       yield k;
     }
   }
@@ -41,7 +41,7 @@ abstract class _MapStore extends Store {
 
   @override
   Future<void> batch(Map<String, String> objectsByKey) async {
-    for (String key in objectsByKey.keys) {
+    for (final String key in objectsByKey.keys) {
       storage[key] = objectsByKey[key];
     }
     return true;
@@ -54,7 +54,7 @@ abstract class _MapStore extends Store {
   Stream<String> getByKeys(Iterable<String> keys) async* {
     final dynamic values =
     keys.map((String key) => storage[key]).where((dynamic v) => v != null);
-    for (dynamic v in values) {
+    for (final dynamic v in values) {
       yield v;
     }
   }
@@ -64,7 +64,7 @@ abstract class _MapStore extends Store {
 
   @override
   Stream<String> all() async* {
-    for (dynamic v in storage.values) {
+    for (final dynamic v in storage.values) {
       yield v;
     }
   }

@@ -11,8 +11,9 @@ import 'package:json_object_lite/json_object_lite.dart';
 // ignore: avoid_relative_lib_imports
 import '../test/lib/sporran_test_config.dart';
 
-/// An example of sporran initialisation and usage, see the test scenarios for more detailed
-/// use cases.
+/// An example of sporran initialisation and usage, see the test
+/// scenarios for more detailed use cases.
+// ignore: avoid_void_async
 void main() async {
   // Initialise Sporran
   final SporranInitialiser initialiser = SporranInitialiser();

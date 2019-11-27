@@ -460,8 +460,8 @@ class _SporranDatabase {
   }
 
   /// Update/create a CouchDb attachment
-  void updateAttachment(String key, String name, String revision,
-      String contentType, String payload) {
+  FutureOr<void> updateAttachment(String key, String name, String revision,
+      String contentType, String payload) async {
     /* Create our own Wilt instance */
     final Wilt wilting = WiltBrowserClient(_host, _port, _scheme);
 
@@ -470,7 +470,7 @@ class _SporranDatabase {
       wilting.login(_user, _password);
     }
 
-    void getCompleter(dynamic res) {
+    FutureOr<void> getCompleter(dynamic res) async {
       /**
        * If the document doesn't already have an attachment
        * with this name get the revision and add this one.
@@ -491,7 +491,7 @@ class _SporranDatabase {
         if (!found) {
           final String newRevision =
               WiltUserUtils.getDocumentRev(successResponse);
-          wilting.updateAttachment(
+          await wilting.updateAttachment(
               key, name, newRevision, contentType, payload);
         }
       }
@@ -510,7 +510,7 @@ class _SporranDatabase {
     }
 
     wilting.db = _dbName;
-    wilting
+    await wilting
         .updateAttachment(key, name, revision, contentType, payload)
         .then(putCompleter);
   }
@@ -670,8 +670,9 @@ class _SporranDatabase {
       _manualBulkInsert(documentsToUpdate).then((dynamic revisions) {
         /* Finally do the attachments */
         attachmentsToUpdate.forEach((dynamic key, dynamic attachment) {
+          attachment.isImmutable = false;
           final List<String> keyList = key.split('-');
-          attachment.rev ??= revisions[keyList[0]];
+          attachment.rev = revisions[keyList[0]];
           updateAttachment(
               keyList[0],
               attachment.payload.attachmentName,
